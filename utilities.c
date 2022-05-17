@@ -54,7 +54,7 @@ char	*save_char(char *line, int i, int len, t_player *players)
 	if (line[i] != ',' && i < 5)
 	{
 		len = 0;
-		while (ft_isalpha(line[i + len]) || line[i + len] == ' ' || line[i + len] == ',' || ft_is_ext_ascii(line[i + len]))
+		while (line[i + len] != ',' && line[i + len] != '\\')
 			len++;
 		str = ft_strsub(line, i, len);											//Uus ft_atoi jotta saadaan päivät messiin
 		result = str;

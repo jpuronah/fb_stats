@@ -5,13 +5,6 @@
 #include <stdio.h>
 #include "libft/libft.h"
 
-/*typedef struct	s_list
-{
-	t_player		*content;
-	size_t			content_size;
-	struct s_list	*next;
-}				t_list;*/
-
 typedef struct	s_player
 {
 	int		line_index;
@@ -34,10 +27,18 @@ typedef struct	s_player
 	void		*current;
 }				t_player;
 
-int		save_position(char *line, int i, int len, t_player *player);
-char	*save_char(char *line, int i, int len, t_player *players);
-int		ft_is_ext_ascii(int c);
-int		save_integer(char *line, int i, int len, t_player *players);
-int		skip_column(char *line, int i, int n);
+typedef struct	s_p_lst
+{
+	t_player		*player;
+	struct s_list	*next;
+	struct s_list	*previous;
+}				t_p_lst;
+
+int			save_position(char *line, int i, int len, t_player *player);
+char		*save_char(char *line, int i, int len, t_player *players);
+int			ft_is_ext_ascii(int c);
+int			save_integer(char *line, int i, int len, t_player *players);
+int			skip_column(char *line, int i, int n);
+t_player	*parse_stats(char	*line, t_player *player);
 
 #endif
