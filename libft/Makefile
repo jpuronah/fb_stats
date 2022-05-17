@@ -6,7 +6,7 @@
 #    By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 15:40:47 by jpuronah          #+#    #+#              #
-#    Updated: 2022/04/22 14:00:08 by jpuronah         ###   ########.fr        #
+#    Updated: 2022/05/17 15:11:38 by jpuronah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,8 @@ $(NAME):
 			./get_next_line.c \
 			./ft_countwords.c \
 			./ft_lstrev.c \
-			./ft_abs.c
+			./ft_abs.c \
+			./ft_create_elem.c
 	ar -rc libft.a ./ft_atoi.o \
 			./ft_bzero.o \
 			./ft_isalnum.o \
@@ -143,7 +144,8 @@ $(NAME):
 			./get_next_line.o \
 			./ft_countwords.o \
 			./ft_lstrev.o \
-			./ft_abs.o
+			./ft_abs.o \
+			./ft_create_elem.o
 
 clean:
 	rm -f *.o

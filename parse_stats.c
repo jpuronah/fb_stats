@@ -1,24 +1,4 @@
-#include <fcntl.h>
-#include <stdio.h>
-#include "libft/libft.h"
-
-typedef struct	s_player
-{
-	int		line_index;
-	//int		rank;
-	char	*name;
-	//char	*nation;
-	char	*position;
-	//char	*squad;
-	int		age;
-	//char	*born;
-	//int		mp;
-	//int		starts;
-	int			minutes;
-	//int		ninetys;
-	//int		goals;
-	//int		assists;
-}				t_player;
+#include "fb_stats.h"
 
 t_player	*init_players(void)
 {
@@ -29,41 +9,15 @@ t_player	*init_players(void)
 	players->age = 0;
 	players->name = NULL;
 	players->position = NULL;
+	players->next = NULL;
+	players->previous = NULL;
+	players->current = NULL;
+	players->line_index = 0;
+	players->lst_index = 0;
 	return (players);
 }
 
 //Rk,Player,Nation,Pos,Squad,Age,Born,MP,Starts,Min,90s,Gls,Ast,G-PK,PK,PKatt,CrdY,CrdR,Gls,Ast,G+A,G-PK,G+A-PK,xG,npxG,xA,npxG+xA,xG,xA,xG+xA,npxG,npxG+xA,Matches
-
-int		skip_column(char *line, int i, int n)
-{
-	while (n >= 0)
-	{
-		while (line[i] != ',')
-			i++;
-		while (line[i] == ',')
-			i++;
-		n--;
-	}
-	return (i);
-}
-
-int		save_int(char *line, int i, int len, t_player *players)
-{
-	int		result;
-	char	*str;
-
-	if (line[i] != ',')
-	{
-		len = 0;
-		while (line[i + len] != ',')
-			len++;
-		str = ft_strsub(line, i, len);											//Uus ft_atoi jotta saadaan päivät messiin
-		result = ft_atoi(str);
-		str = NULL;
-		players->line_index = i + len;
-	}
-	return (result);
-}
 
 t_player	*parse_stats(char	*line, t_player *player)
 {
@@ -73,89 +27,75 @@ t_player	*parse_stats(char	*line, t_player *player)
 	char	*str;
 
 	i = 0;
-	j = 0;
+
 	len = 0;
 	str = NULL;
-	printf("%s\n", line);
+	//printf("%s\n", line);
 	if (line[i])
 	{
 		//	NAME 
 		while (line[i] != ',')
 			i++;
-		if (line[i] == ',' && i < 4)
-		{
-			j = 0;
-			i++;
-			while (ft_isalpha(line[i + len]) || line[i + len] == ' ')
-				len++;
-			//printf("name: %c\n", line[i]);
-			//printf("%d\n", len);
-			str = ft_strsub(line, i, len);
-			//printf("%s\n", str);
-			player->name = str;
-			str = NULL;
-			i = i + len;
-		}
-	//	printf("test\n");
+		player->name = save_char(line, i, len, player);
+		i = player->line_index;
 		//	POSITION
-		if (line[i] == '\\')
-		{
-			while (line[i] != ',')
-				i++;
-			while (line[i] == ',')
-				i++;
-			while (line[i] != ',')
-				i++;
-			while (line[i] == ',')
-				i++;
-			j = 0;
-			while (line[i] != ',')
-			{
-				len = 0;
-				while (line[i + len] != ',')
-					len++;
-				str = ft_strsub(line, i, len);
-				player->position = str;
-				str = NULL;
-				i = i + len;
-			}
-		}
+		i = save_position(line, i, len, player);
 		//	AGE
 		i = skip_column(line, i, 1);
-		player->age = save_int(line, i, len, player);
-		j = 0;
-		printf("%c\n", line[i]);
-		i = skip_column(line, i, 3);
-		player->minutes = save_int(line, i, len, player);
+		player->age = save_integer(line, i, len, player);
 		i = player->line_index;
+		//	MINUTES
+		i = skip_column(line, i, 3);
+		player->minutes = save_integer(line, i, len, player);
+		i = player->line_index;
+		//	GOALS
+		//	ASSISTS
+		//	GOALS + ASSISTS
+		//	GOALS / 90
+		//	ASSISTS / 90
+		//	(GOALS + ASSISTS) / 90
 	}
-	//printf("exit\n");
 	return (player);
 }
 
 int		main(int ac, char **av)
 {
-	int		fd;
-	int		ret;
-	int		nro;
-	int		limit;
-	char	*line;
-	t_player	*players;
+	int				fd;
+	int				ret;
+	int				player_count;
+	int				limit;
+	char			*line;
+	t_player		*tmp;
+	t_player		*players;
+	t_list			*player_list;
 
+	player_count = 0;
 	players = init_players();
+	tmp = init_players();
+	player_list = ft_create_elem(tmp);
+	/*player_list = (t_list **)malloc(sizeof(t_list) * 550);
+	*player_list = ft_lstnew(players, 550);
+	player_list->next = players;*/
 	if (av[2])
 		limit = ft_atoi(av[2]);
 	fd = open(av[1], O_RDONLY);
 	ret = get_next_line(fd, &line);
 	ret = get_next_line(fd, &line);
-	nro = 0;
-	while (ret > 0 && nro < limit)
+	while (ret > 0 && player_count < limit)
 	{
-		printf("%d\n", limit);
+		//printf("%d\n", limit);
 		ret = get_next_line(fd, &line);
 		players = parse_stats(line, players);
-		nro++;
+		player_list->content = players;
+		player_list->next = ft_create_elem(tmp);
+		printf("%s, %s, %d, %d\n", players->name, players->position, players->age, players->minutes);
+		player_count++;
 	}
-	printf("%s, %s, %d, %d\n", players->name, players->position, players->age, players->minutes);
+	tmp = NULL;
+	ft_lstrev(&player_list);
+	tmp = player_list->content;
+	printf("%s\n", tmp->name);
+	tmp = player_list->next->content;
+	printf("%s\n", tmp->name);
 	return (0);
 }

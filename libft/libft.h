@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 18:03:32 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/04/22 13:59:51 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:11:57 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list	*ft_lstat(t_list *lst, size_t val);
 t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list	*ft_lstnew(void const *content, size_t content_size);
+
+t_list	*ft_create_elem(void *data);
 
 size_t	ft_lstcount(t_list *lst);
 void	ft_lstrev(t_list **alst);
