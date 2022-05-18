@@ -50,5 +50,7 @@ void	ft_goals_and_assists(t_player *player_list);
 void	ft_goals_and_assists_min(t_player *player_list);
 void	ft_age_goals_and_assists_min(t_player *player_list);
 void	ft_goals_top_10(t_player *player_list);
+void	output_stats(char	*av2, t_player *head);
+char	*output_type(char	*av2);
 
 #endif

@@ -1,4 +1,4 @@
-#include "fb_stats.h"
+#include "sources/fb_stats.h"
 
 void	show_data(t_player *data)
 {
@@ -10,7 +10,7 @@ void	show_data(t_player *data)
 	printf("assists: %d \n", data->assists);
 }
 
-void	ft_print_player_list(t_player *player_list, int limit)
+void	ft_print_player(t_player *player_list, int limit)
 {
 	int		count;
 
@@ -56,44 +56,6 @@ void	init_everything(int	*limit, int *player_count, char **arg2, t_player **head
 	*players = init_player();
 	*players2 = NULL;
 	*tmp = init_player();
-}
-
-void	output_stats(char	*av2, t_player *head)
-{
-	if (ft_strcmp(av2, "mins") == 0)
-		ft_most_mins(head);
-	else if (ft_strcmp(av2, "goals") == 0)
-		ft_goals(head);
-	else if (ft_strcmp(av2, "g10") == 0)
-		ft_goals_top_10(head);
-	else if (ft_strcmp(av2, "assists") == 0)
-		ft_assists(head);
-	else if (ft_strcmp(av2, "ga") == 0)
-		ft_goals_and_assists(head);
-	else if (ft_strcmp(av2, "gamin") == 0)
-		ft_goals_and_assists_min(head);
-	else if (ft_strcmp(av2, "agegamin") == 0)
-		ft_age_goals_and_assists_min(head);
-}
-
-char	*output_type(char	*av2)
-{
-	if (ft_strcmp(av2, "mins") == 0)
-		return ("mins");
-	else if (ft_strcmp(av2, "goals") == 0)
-		return ("goals");
-	else if (ft_strcmp(av2, "g10") == 0)
-		return ("g10");
-	else if (ft_strcmp(av2, "assists") == 0)
-		return ("assists");
-	else if (ft_strcmp(av2, "ga") == 0)
-		return ("ga");
-	else if (ft_strcmp(av2, "gamin") == 0)
-		return ("gamin");
-	else if (ft_strcmp(av2, "agegamin") == 0)
-		return ("agegamin");
-	else
-		return (NULL);
 }
 
 int		main(int ac, char **av)
@@ -163,6 +125,6 @@ int		main(int ac, char **av)
 	}
 	if (arg2 != NULL)
 		output_stats(arg2, head);
-	ft_print_player_list(head, limit);
+	ft_print_player(head, limit);
 	return (0);
 }

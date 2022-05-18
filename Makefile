@@ -1,5 +1,5 @@
 NAME = stats
-SOURCES = ./sources/main.c ./sources/parser.c ./sources/utilities.c ./sources/stat_output.c
+SOURCES = main.c ./sources/parser.c ./sources/utilities.c ./sources/stat_output.c ./sources/options_handling.c
 INCLUDES = fb_stats.h
 LIBFT = libft/libft.a
 
