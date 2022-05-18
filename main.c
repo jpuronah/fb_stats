@@ -25,6 +25,7 @@ void	ft_print_player(t_player *player_list, int limit)
 			break ;
 		count++;
 	}
+	exit(EXIT_SUCCESS);
 }
 
 t_player	*init_player(void)

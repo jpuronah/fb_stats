@@ -1,6 +1,6 @@
 #include "fb_stats.h"
 
-void	ft_goals_per_90(t_player *player_list)
+void	ft_goals_per_mins(t_player *player_list)
 {
 	double		ref;
 	char		*leader;
@@ -255,6 +255,56 @@ void	ft_goals_and_assists_min(t_player *player_list)
 			if ((player_list->minutes / (player_list->assists + player_list->goals)) < ref)
 			{
 				ref = player_list->minutes / (player_list->assists + player_list->goals);
+				leader = player_list->name;
+			}
+		}
+		if (player_list->next != NULL)
+			player_list = player_list->next;
+		if (player_list->next == NULL)
+			break ;
+	}
+	printf("%s, %d\n", leader, ref);
+}
+
+void	ft_goals_min(t_player *player_list)
+{
+	int		ref;
+	char	*leader;
+
+	ref = 5000;
+	leader = NULL;
+	while (player_list->next != NULL)
+	{
+		if ((player_list->goals) > 0 && player_list->minutes > 480)
+		{
+			if ((player_list->minutes / (player_list->goals)) < ref)
+			{
+				ref = player_list->minutes / (player_list->goals);
+				leader = player_list->name;
+			}
+		}
+		if (player_list->next != NULL)
+			player_list = player_list->next;
+		if (player_list->next == NULL)
+			break ;
+	}
+	printf("%s, %d\n", leader, ref);
+}
+
+void	ft_assists_min(t_player *player_list)
+{
+	int		ref;
+	char	*leader;
+
+	ref = 5000;
+	leader = NULL;
+	while (player_list->next != NULL)
+	{
+		if ((player_list->assists) > 0 && player_list->minutes > 480)
+		{
+			if ((player_list->minutes / (player_list->assists)) < ref)
+			{
+				ref = player_list->minutes / (player_list->assists);
 				leader = player_list->name;
 			}
 		}
