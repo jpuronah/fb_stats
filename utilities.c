@@ -1,5 +1,18 @@
 #include "fb_stats.h"
 
+/*t_p_lst		*init_p_lst(void)
+{
+	t_p_lst		*player_list;
+
+	player_list = (t_p_lst *)ft_memalloc(sizeof(t_p_lst) * 550);
+	if (player_list == NULL)
+		return (NULL);
+	player_list->player = NULL;
+	player_list->next = NULL;
+	player_list->previous = NULL;
+	return (player_list);
+}*/
+
 int		skip_column(char *line, int i, int n)
 {
 	if (line[i] == ',' || line[i] == '\\')

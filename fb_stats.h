@@ -22,17 +22,17 @@ typedef struct	s_player
 	//int		ninetys;
 	//int		goals;
 	//int		assists;
-	void		*next;
-	void		*previous;
-	void		*current;
+	struct	s_player		*next;
+	struct	s_player		*previous;
+	struct	s_player		*current;
 }				t_player;
 
-typedef struct	s_p_lst
+/*typedef struct	s_p_lst
 {
 	t_player		*player;
 	struct s_list	*next;
 	struct s_list	*previous;
-}				t_p_lst;
+}				t_p_lst;*/
 
 int			save_position(char *line, int i, int len, t_player *player);
 char		*save_char(char *line, int i, int len, t_player *players);

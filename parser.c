@@ -37,6 +37,5 @@ t_player	*parse_stats(char	*line, t_player *player)
 		//	ASSISTS / 90
 		//	(GOALS + ASSISTS) / 90
 	}
-	//player->next = tmp;
 	return (player);
 }
