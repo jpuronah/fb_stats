@@ -10,7 +10,7 @@ git clone < URL >
   ```
   $>make stats
   $>gcc -o stats ./sources/parse_stats.c ./sources/parser.c ./sources/utilities.c libft/libft.a
-  $>./stats dump 300
+  $>./stats EPL_player_stats 300
   $>Harry Maguire (29), DF, 2425 min.
   $>
   $>./stats EPL_player_stats 238
