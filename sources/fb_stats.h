@@ -41,5 +41,6 @@ int			save_integer(char *line, int i, int len, t_player *players);
 int			skip_column(char *line, int i, int n);
 t_player	*parse_stats(char	*line, t_player *player);
 void		usage(char *reason);
+size_t		ft_playercount(t_player *lst);
 
 #endif

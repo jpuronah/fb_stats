@@ -28,6 +28,20 @@ void	ft_list_push_front(t_player **begin_list, void *data)
 		*begin_list = ft_create_player(data);
 }*/
 
+size_t	ft_playercount(t_player *lst)
+{
+	size_t i;
+
+	i = 0;
+	
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i - 1);
+}
+
 void	usage(char *reason)
 {
 	//printf("Error: ");

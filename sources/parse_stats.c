@@ -67,20 +67,6 @@ t_player	*ft_create_player(t_player *player)
 	return (tmp);
 }
 
-size_t	ft_playercount(t_player *lst)
-{
-	size_t i;
-
-	i = 0;
-	
-	while (lst != NULL)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i - 1);
-}
-
 int		main(int ac, char **av)
 {
 	int				fd;
