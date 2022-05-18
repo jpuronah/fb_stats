@@ -31,7 +31,13 @@ t_player	*parse_stats(char	*line, t_player *player)
 		player->minutes = save_integer(line, i, len, player);
 		i = player->line_index;
 		//	GOALS
+		i = skip_column(line, i, 0);
+		player->goals = save_integer(line, i, len, player);
+		i = player->line_index;
 		//	ASSISTS
+		//i = skip_column(line, i, 2);
+		player->assists = save_integer(line, i, len, player);
+		i = player->line_index;
 		//	GOALS + ASSISTS
 		//	GOALS / 90
 		//	ASSISTS / 90

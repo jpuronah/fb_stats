@@ -5,7 +5,9 @@ void	show_data(t_player *data)
 	printf("%s (", data->name);
 	printf("%d), ", data->age);
 	printf("%s, ", data->position);
-	printf("%d min.\n", data->minutes);
+	printf("%d min., ", data->minutes);
+	printf("goals: %d, ", data->goals);
+	printf("assists: %d \n", data->assists);
 }
 
 void	ft_print_player_list(t_player *player_list, int limit)
@@ -13,14 +15,6 @@ void	ft_print_player_list(t_player *player_list, int limit)
 	int		count;
 
 	count = 0;
-	/*while (player_list->previous != NULL)
-	{
-		show_data(player_list->previous);
-		if (player_list->previous != NULL)
-			player_list = player_list->previous;
-		if (player_list->previous == NULL)
-			break ;
-	}*/
 	while (player_list->next != NULL)
 	{
 		if (limit == count)
@@ -40,6 +34,8 @@ t_player	*init_player(void)
 	if (!(player = (t_player *)ft_memalloc(sizeof(t_player))))
 		return (NULL);
 	player->age = 0;
+	player->goals = 0;
+	player->assists = 0;
 	player->name = NULL;
 	player->position = NULL;
 	player->next = NULL;
@@ -50,21 +46,26 @@ t_player	*init_player(void)
 	return (player);
 }
 
-t_player	*ft_create_player(t_player *player)
+void	output_stats(char	*av2, t_player *head)
 {
-	t_player	*tmp;
+	if (ft_strcmp(av2, "mins") == 0)
+		ft_most_mins(head);
+	else if (ft_strcmp(av2, "goals") == 0)
+		ft_goals(head);
+	else if (ft_strcmp(av2, "assists") == 0)
+		ft_assists(head);
+}
 
-	if (!(tmp = (t_player *)malloc(sizeof(t_player))))
+char	*output_type(char	*av2)
+{
+	if (ft_strcmp(av2, "mins") == 0)
+		return ("mins");
+	else if (ft_strcmp(av2, "goals") == 0)
+		return ("goals");
+	else if (ft_strcmp(av2, "assists") == 0)
+		return ("assists");
+	else
 		return (NULL);
-	player->age = 0;
-	player->name = NULL;
-	player->position = NULL;
-	player->next = NULL;
-	player->previous = NULL;
-	player->current = NULL;
-	player->line_index = 0;
-	player->lst_index = 0;
-	return (tmp);
 }
 
 int		main(int ac, char **av)
@@ -75,6 +76,7 @@ int		main(int ac, char **av)
 
 	int				player_count;
 	int				limit;
+	char			*arg2;
 	t_player		*players;
 	t_player		*players2;
 	t_player		*tmp;
@@ -82,12 +84,15 @@ int		main(int ac, char **av)
 
 	if (ac != 3)
 		usage("wrong number of arguments");
+	arg2 = NULL;
 	head = NULL;
+	limit = -1;
 	player_count = 0;
 	players = init_player();
 	players2 = NULL;
 	tmp = init_player();
-	if (av[2])
+	arg2 = output_type(av[2]);
+	if (arg2 == NULL)
 		limit = ft_atoi(av[2]);
 	fd = open(av[1], O_RDONLY);
 	ret = get_next_line(fd, &line);
@@ -131,6 +136,8 @@ int		main(int ac, char **av)
 		}
 		//player_count++;
 	}
+	if (arg2 != NULL)
+		output_stats(arg2, head);
 	if (limit == 0)
 	{
 		printf("%s (", head->name);

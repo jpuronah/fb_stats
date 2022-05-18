@@ -1,33 +1,5 @@
 #include "fb_stats.h"
 
-/*t_p_lst		*init_p_lst(void)
-{
-	t_p_lst		*player_list;
-
-	player_list = (t_p_lst *)ft_memalloc(sizeof(t_p_lst) * 550);
-	if (player_list == NULL)
-		return (NULL);
-	player_list->player = NULL;
-	player_list->next = NULL;
-	player_list->previous = NULL;
-	return (player_list);
-}*/
-
-/*
-void	ft_list_push_front(t_player **begin_list, void *data)
-{
-	t_player	*tmp;
-
-	if (*begin_list)
-	{
-		tmp = ft_create_player(data);
-		tmp->next = *begin_list;
-		*begin_list = tmp;
-	}
-	else
-		*begin_list = ft_create_player(data);
-}*/
-
 size_t	ft_playercount(t_player *lst)
 {
 	size_t i;
@@ -46,7 +18,7 @@ void	usage(char *reason)
 {
 	//printf("Error: ");
 	//printf("%s --- ", reason);
-	printf("	usage: ./stats <input file> <player index>\n");
+	printf("	usage: ./stats <input file> <player index> goals assists\n");
 	exit(EXIT_FAILURE);
 }
 int		skip_column(char *line, int i, int n)

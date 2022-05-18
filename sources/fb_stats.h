@@ -20,8 +20,8 @@ typedef struct	s_player
 	//int		starts;
 	int			minutes;
 	//int		ninetys;
-	//int		goals;
-	//int		assists;
+	int			goals;
+	int		assists;
 	struct	s_player		*next;
 	struct	s_player		*previous;
 	struct	s_player		*current;
@@ -42,5 +42,9 @@ int			skip_column(char *line, int i, int n);
 t_player	*parse_stats(char	*line, t_player *player);
 void		usage(char *reason);
 size_t		ft_playercount(t_player *lst);
+void	ft_assists(t_player *player_list);
+void	ft_goals(t_player *player_list);
+void	ft_most_mins(t_player *player_list);
+void	ft_goals_per_90(t_player *player_list);
 
 #endif
