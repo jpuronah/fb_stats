@@ -8,8 +8,11 @@ void	show_data(t_player *data)
 	printf("%d min.\n", data->minutes);
 }
 
-void	ft_print_player_list(t_player *player_list)
+void	ft_print_player_list(t_player *player_list, int limit)
 {
+	int		count;
+
+	count = 0;
 	/*while (player_list->previous != NULL)
 	{
 		show_data(player_list->previous);
@@ -20,13 +23,14 @@ void	ft_print_player_list(t_player *player_list)
 	}*/
 	while (player_list->next != NULL)
 	{
-		show_data(player_list->next);
+		if (limit == count)
+			show_data(player_list->next);
 		if (player_list->next != NULL)
 			player_list = player_list->next;
 		if (player_list->next == NULL)
 			break ;
+		count++;
 	}
-	ft_putchar('\n');
 }
 
 t_player	*init_player(void)
@@ -63,20 +67,6 @@ t_player	*ft_create_player(t_player *player)
 	return (tmp);
 }
 
-void	ft_list_push_front(t_player **begin_list, void *data)
-{
-	t_player	*tmp;
-
-	if (*begin_list)
-	{
-		tmp = ft_create_player(data);
-		tmp->next = *begin_list;
-		*begin_list = tmp;
-	}
-	else
-		*begin_list = ft_create_player(data);
-}
-
 size_t	ft_playercount(t_player *lst)
 {
 	size_t i;
@@ -85,11 +75,10 @@ size_t	ft_playercount(t_player *lst)
 	
 	while (lst != NULL)
 	{
-		printf("%s\n", lst->name);
 		lst = lst->next;
 		i++;
 	}
-	return (i);
+	return (i - 1);
 }
 
 int		main(int ac, char **av)
@@ -105,6 +94,8 @@ int		main(int ac, char **av)
 	t_player		*tmp;
 	t_player		*head;
 
+	if (ac != 3)
+		usage("wrong number of arguments");
 	head = NULL;
 	player_count = 0;
 	players = init_player();
@@ -116,7 +107,7 @@ int		main(int ac, char **av)
 	ret = get_next_line(fd, &line);
 	ret = get_next_line(fd, &line);
 	head = players;
-	while (ret > 0 && player_count < limit)
+	while (ret > 0)
 	{
 		if (players->previous == NULL)
 		{
@@ -135,31 +126,33 @@ int		main(int ac, char **av)
 			tmp = init_player();
 			players2->next = tmp;
 			tmp->previous = players2;
-			if (tmp->previous != NULL)
-			{
-				ret = get_next_line(fd, &line);
-				tmp = parse_stats(line, tmp);
-				players = init_player();
-				tmp->next = players;
-				players->previous = tmp;
-			}
-			if (players->previous != NULL)
-			{
-				ret = get_next_line(fd, &line);
-				players = parse_stats(line, players);
-				players2 = init_player();
-				players->next = players2;
-				players2->previous = players;
-			}
 		}
-		player_count++;
+		if (tmp->previous != NULL)
+		{
+			ret = get_next_line(fd, &line);
+			tmp = parse_stats(line, tmp);
+			players = init_player();
+			tmp->next = players;
+			players->previous = tmp;
+		}
+		if (players->previous != NULL)
+		{
+			ret = get_next_line(fd, &line);
+			players = parse_stats(line, players);
+			players2 = init_player();
+			players->next = players2;
+			players2->previous = players;
+		}
+		//player_count++;
 	}
-	printf("%zu\n", ft_playercount(head));
-	//ft_print_player_list(players);
-	
-	
-	//ft_print_player_list(players);
-	//ft_print_player_list(player_list);
-	ft_putstr("\n");
+	if (limit == 0)
+	{
+		printf("%s (", head->name);
+		printf("%d), ", head->age);
+		printf("%s, ", head->position);
+		printf("%d min.\n", head->minutes);
+		exit(EXIT_SUCCESS);
+	}
+	ft_print_player_list(head, limit);
 	return (0);
 }

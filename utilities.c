@@ -13,6 +13,28 @@
 	return (player_list);
 }*/
 
+/*
+void	ft_list_push_front(t_player **begin_list, void *data)
+{
+	t_player	*tmp;
+
+	if (*begin_list)
+	{
+		tmp = ft_create_player(data);
+		tmp->next = *begin_list;
+		*begin_list = tmp;
+	}
+	else
+		*begin_list = ft_create_player(data);
+}*/
+
+void	usage(char *reason)
+{
+	//printf("Error: ");
+	//printf("%s --- ", reason);
+	printf("	usage: ./stats <input file> <player index>\n");
+	exit(EXIT_FAILURE);
+}
 int		skip_column(char *line, int i, int n)
 {
 	if (line[i] == ',' || line[i] == '\\')
