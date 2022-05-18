@@ -1,17 +1,21 @@
 # fb_stats
 
-Football data project
+Football Data Project
 
 No clear end goal, maybe a game or maybe just data visualization
 
-usage: ./stats <input file> COMMAND
+usage: ./stats input_file COMMAND
 
 Command list:
 
-'number' (player index), mins, goals, 
-assists, ga (goals+assists), 
+'number' (player index), 
+mins (minutes played), 
+goals, 
+assists, 
+ga (goals+assists), 
 gamin (minutes / goals+assists), 
-agegamin ((age / 20) * (minutes / goals+assists))
+agegamin ((age / 20) * (minutes / goals+assists)),
+
 
 
   Example:
