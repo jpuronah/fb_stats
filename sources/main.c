@@ -18,7 +18,7 @@ void	ft_print_player_list(t_player *player_list, int limit)
 	while (player_list->next != NULL)
 	{
 		if (limit == count)
-			show_data(player_list->next);
+			show_data(player_list);
 		if (player_list->next != NULL)
 			player_list = player_list->next;
 		if (player_list->next == NULL)
@@ -46,14 +46,34 @@ t_player	*init_player(void)
 	return (player);
 }
 
+void	init_everything(int	*limit, int *player_count, char **arg2, t_player **head,
+		t_player **players, t_player **players2, t_player **tmp)
+{
+	*arg2 = NULL;
+	*head = NULL;
+	*limit = -1;
+	*player_count = 0;
+	*players = init_player();
+	*players2 = NULL;
+	*tmp = init_player();
+}
+
 void	output_stats(char	*av2, t_player *head)
 {
 	if (ft_strcmp(av2, "mins") == 0)
 		ft_most_mins(head);
 	else if (ft_strcmp(av2, "goals") == 0)
 		ft_goals(head);
+	else if (ft_strcmp(av2, "g10") == 0)
+		ft_goals_top_10(head);
 	else if (ft_strcmp(av2, "assists") == 0)
 		ft_assists(head);
+	else if (ft_strcmp(av2, "ga") == 0)
+		ft_goals_and_assists(head);
+	else if (ft_strcmp(av2, "gamin") == 0)
+		ft_goals_and_assists_min(head);
+	else if (ft_strcmp(av2, "agegamin") == 0)
+		ft_age_goals_and_assists_min(head);
 }
 
 char	*output_type(char	*av2)
@@ -62,8 +82,16 @@ char	*output_type(char	*av2)
 		return ("mins");
 	else if (ft_strcmp(av2, "goals") == 0)
 		return ("goals");
+	else if (ft_strcmp(av2, "g10") == 0)
+		return ("g10");
 	else if (ft_strcmp(av2, "assists") == 0)
 		return ("assists");
+	else if (ft_strcmp(av2, "ga") == 0)
+		return ("ga");
+	else if (ft_strcmp(av2, "gamin") == 0)
+		return ("gamin");
+	else if (ft_strcmp(av2, "agegamin") == 0)
+		return ("agegamin");
 	else
 		return (NULL);
 }
@@ -84,18 +112,14 @@ int		main(int ac, char **av)
 
 	if (ac != 3)
 		usage("wrong number of arguments");
-	arg2 = NULL;
-	head = NULL;
-	limit = -1;
-	player_count = 0;
-	players = init_player();
-	players2 = NULL;
-	tmp = init_player();
+	init_everything(&limit, &player_count, &arg2, 
+					&head, &players, &players2, &tmp);
 	arg2 = output_type(av[2]);
 	if (arg2 == NULL)
 		limit = ft_atoi(av[2]);
 	fd = open(av[1], O_RDONLY);
 	ret = get_next_line(fd, &line);
+	free(line);
 	ret = get_next_line(fd, &line);
 	head = players;
 	while (ret > 0)
@@ -104,6 +128,7 @@ int		main(int ac, char **av)
 		{
 			ret = get_next_line(fd, &line);
 			players = parse_stats(line, players);
+			free(line);
 			head = players;
 			players2 = init_player();
 			players->next = players2;
@@ -113,7 +138,6 @@ int		main(int ac, char **av)
 		{
 			ret = get_next_line(fd, &line);
 			players2 = parse_stats(line, players2);
-			tmp = players;
 			tmp = init_player();
 			players2->next = tmp;
 			tmp->previous = players2;
@@ -134,18 +158,11 @@ int		main(int ac, char **av)
 			players->next = players2;
 			players2->previous = players;
 		}
-		//player_count++;
+		//free(line);
+		player_count++;
 	}
 	if (arg2 != NULL)
 		output_stats(arg2, head);
-	if (limit == 0)
-	{
-		printf("%s (", head->name);
-		printf("%d), ", head->age);
-		printf("%s, ", head->position);
-		printf("%d min.\n", head->minutes);
-		exit(EXIT_SUCCESS);
-	}
 	ft_print_player_list(head, limit);
 	return (0);
 }

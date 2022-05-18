@@ -18,7 +18,7 @@ void	usage(char *reason)
 {
 	//printf("Error: ");
 	//printf("%s --- ", reason);
-	printf("	usage: ./stats <input file> <player index> goals assists\n");
+	printf("	usage: ./stats <input file> COMMAND\nplayer index, goals, assists, g+a (goals+assists)\n");
 	exit(EXIT_FAILURE);
 }
 int		skip_column(char *line, int i, int n)

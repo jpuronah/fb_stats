@@ -46,5 +46,9 @@ void	ft_assists(t_player *player_list);
 void	ft_goals(t_player *player_list);
 void	ft_most_mins(t_player *player_list);
 void	ft_goals_per_90(t_player *player_list);
+void	ft_goals_and_assists(t_player *player_list);
+void	ft_goals_and_assists_min(t_player *player_list);
+void	ft_age_goals_and_assists_min(t_player *player_list);
+void	ft_goals_top_10(t_player *player_list);
 
 #endif
