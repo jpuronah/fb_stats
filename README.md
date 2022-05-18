@@ -6,6 +6,7 @@ No clear end goal, maybe a game or maybe just data visualization
 
 git clone < URL >
 
+  Example:
   ```
   $>make stats  
   $>./stats dump 300
