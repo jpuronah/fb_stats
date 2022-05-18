@@ -4,7 +4,7 @@ Football data project
 
 No clear end goal, maybe a game or maybe just data visualization
 
-git clone <URL>
+git clone < URL >
 
   ```
   $>make stats  
