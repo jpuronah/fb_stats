@@ -7,7 +7,9 @@ void	output_stats(char	*av2, t_player *head)
 	else if (ft_strcmp(av2, "goals") == 0)
 		ft_goals(head);
 	else if (ft_strcmp(av2, "g10") == 0)
-		ft_goals_top_10(head);
+		ft_goals_top_10(head, 1000, 0);
+	else if (ft_strcmp(av2, "a10") == 0)
+		ft_assists_top_10(head, 1000, 0);
 	else if (ft_strcmp(av2, "assists") == 0)
 		ft_assists(head);
 	else if (ft_strcmp(av2, "ga") == 0)
@@ -26,6 +28,8 @@ char	*output_type(char	*av2)
 		return ("goals");
 	else if (ft_strcmp(av2, "g10") == 0)
 		return ("g10");
+	else if (ft_strcmp(av2, "a10") == 0)
+		return ("a10");
 	else if (ft_strcmp(av2, "assists") == 0)
 		return ("assists");
 	else if (ft_strcmp(av2, "ga") == 0)
